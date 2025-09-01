@@ -14,9 +14,12 @@ public class lastCheckForUser {
   public checkAction checkAction;
   public checkSource checkSource;
   public Instant occuredAt;
+  public com.prueba.demo.enums.role role;
+  public boolean active;
 
   public lastCheckForUser(Long id, String username, String email, String fullName, String department,
-      com.prueba.demo.enums.checkAction checkAction, com.prueba.demo.enums.checkSource checkSource, Instant occuredAt) {
+      com.prueba.demo.enums.checkAction checkAction, com.prueba.demo.enums.checkSource checkSource, Instant occuredAt,
+      com.prueba.demo.enums.role role, boolean active) {
     this.id = id;
     this.username = username;
     this.email = email;
@@ -25,6 +28,24 @@ public class lastCheckForUser {
     this.checkAction = checkAction;
     this.checkSource = checkSource;
     this.occuredAt = occuredAt;
+    this.role = role;
+    this.active = active;
+  }
+
+  public boolean isActive() {
+    return active;
+  }
+
+  public void setActive(boolean active) {
+    this.active = active;
+  }
+
+  public com.prueba.demo.enums.role getRole() {
+    return role;
+  }
+
+  public void setRole(com.prueba.demo.enums.role role) {
+    this.role = role;
   }
 
   public Long getId() {

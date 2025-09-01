@@ -3,6 +3,8 @@ package com.prueba.demo.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,8 +13,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import com.prueba.demo.dto.allChecksUser;
 import com.prueba.demo.dto.lastCheckForUser;
 import com.prueba.demo.dto.numberChecksLogs;
+import com.prueba.demo.dto.userInformationDto;
 import com.prueba.demo.models.user;
 import com.prueba.demo.respositories.usersRespository;
 
@@ -40,13 +44,24 @@ public class userService implements UserDetailsService {
     return userRepository.findById(id).orElse(null);
   }
 
-  public Page<lastCheckForUser> getUserWithLastCheck(Pageable pageable) {
-    return userRepository.findUsersWithLastCheckLog(pageable);
+  public Page<lastCheckForUser> getUserWithLastCheck(Pageable pageable, String fullName) {
+    return userRepository.findUsersWithLastCheckLog(pageable, fullName);
+  }
+  
+  public Page<allChecksUser> getUserWithAllCheck(Pageable pageable, String fullName) {
+    return userRepository.findUsersWithAllCheckLog(pageable, fullName);
   }
 
   public numberChecksLogs getCountUserWithCheckInAndCheckOut() {
     numberChecksLogs numberChecksLogs = new numberChecksLogs(userRepository.countUsersWithLastCheckIn(), userRepository.countUsersWithLastCheckOut());
     return numberChecksLogs;
+  }
+
+  public userInformationDto getUserInformation(){
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    String email = auth.getName();
+    userInformationDto user = userRepository.findLastCheckInOutByEmail(email).orElse(null);
+    return user;
   }
 
   @Override

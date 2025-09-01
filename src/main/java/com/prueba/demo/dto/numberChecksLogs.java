@@ -1,17 +1,17 @@
 package com.prueba.demo.dto;
 
 public class numberChecksLogs {
-  public Long checIns;
+  public Long checkIns;
 
   public Long checkOuts;
 
   public numberChecksLogs(Long checIns, Long checkOuts) {
-    this.checIns = checIns;
+    this.checkIns = checIns;
     this.checkOuts = checkOuts;
   }
 
   public Long getChecIns() {
-    return checIns;
+    return checkIns;
   }
 
   public Long getCheckOuts() {
@@ -19,7 +19,7 @@ public class numberChecksLogs {
   }
 
   public void setChecIns(Long checIns) {
-    this.checIns = checIns;
+    this.checkIns = checIns;
   }
 
   public void setCheckOuts(Long checkOuts) {

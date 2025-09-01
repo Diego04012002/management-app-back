@@ -1,6 +1,7 @@
 package com.prueba.demo.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.prueba.demo.enums.role;
 
@@ -50,6 +51,7 @@ public class user extends baseEntity {
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "department_id")
+  @JsonBackReference
   @JsonIgnoreProperties({"users"})
   private department department;
 
