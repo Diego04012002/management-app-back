@@ -26,7 +26,7 @@ public class checkInService {
     return checkinRepository.findAll();
   }
 
-  public CheckLog createCheckInLog(Long id) {
+  public CheckLog createCheckInLog(Long id, boolean isAdmin) {
     CheckLog checkLog = checkinRepository.findFirstBySubjectIdOrderByOccurredAtDesc(id).orElse(null);
     CheckLog newCheckLog = new CheckLog();
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -34,20 +34,32 @@ public class checkInService {
       newCheckLog.setId(null);
       user user = userService.findById(id);
       newCheckLog.setSubject(user);
-      user userPerfomed = userService.getByEmail(auth.getName());
-      newCheckLog.setPerformedBy(userPerfomed);
+      if(isAdmin){
+        user userPerfomed = userService.getByEmail(auth.getName());
+        newCheckLog.setPerformedBy(userPerfomed);
+        newCheckLog.setSource(checkSource.ADMIN_PANEL);
+      }else if(!isAdmin){
+        user userPerfomed = null;
+        newCheckLog.setPerformedBy(userPerfomed);
+        newCheckLog.setSource(checkSource.SELF_SERVICE);
+      }
       newCheckLog.setAction(checkAction.CHECK_IN);
-      newCheckLog.setSource(checkSource.ADMIN_PANEL);
       newCheckLog.setOccurredAt(Instant.now());
       newCheckLog.setNotes("");
     } else {
       newCheckLog.setId(null);
       newCheckLog.setSubject(checkLog.getSubject());
-      user userPerfomed = userService.getByEmail(auth.getName());
-      newCheckLog.setPerformedBy(userPerfomed);
+      if(isAdmin){
+        user userPerfomed = userService.getByEmail(auth.getName());
+        newCheckLog.setPerformedBy(userPerfomed);
+        newCheckLog.setSource(checkSource.ADMIN_PANEL);
+      }else if(!isAdmin){
+        user userPerfomed = null;
+        newCheckLog.setPerformedBy(userPerfomed);
+        newCheckLog.setSource(checkSource.SELF_SERVICE);
+      }
       newCheckLog.setOccurredAt(Instant.now());
       newCheckLog.setNotes("");
-      newCheckLog.setSource(checkSource.ADMIN_PANEL);
       newCheckLog
           .setAction(checkLog.getAction() == checkAction.CHECK_IN ? checkAction.CHECK_OUT : checkAction.CHECK_IN);
     }

@@ -92,6 +92,7 @@ public interface usersRespository extends JpaRepository<user, Long> {
 
   @Query("""
       SELECT new com.prueba.demo.dto.userInformationDto(
+          u.id,
           u.email,
           u.fullName,
           u.active,

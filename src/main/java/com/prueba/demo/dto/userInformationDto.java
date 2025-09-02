@@ -2,8 +2,8 @@ package com.prueba.demo.dto;
 
 import java.time.Instant;
 
-
 public class userInformationDto {
+  public Long id;
   public String email;
   public String fullName;
   public boolean active;
@@ -12,8 +12,10 @@ public class userInformationDto {
   public Instant lastCheckOut;
   public String department;
 
-  public userInformationDto(String email, String fullName, Boolean active, com.prueba.demo.enums.role role, Instant lastCheckIn,
+  public userInformationDto(Long id, String email, String fullName, Boolean active, com.prueba.demo.enums.role role,
+      Instant lastCheckIn,
       Instant lastCheckOut, String department) {
+    this.id = id;
     this.email = email;
     this.fullName = fullName;
     this.active = active;
@@ -21,6 +23,14 @@ public class userInformationDto {
     this.lastCheckIn = lastCheckIn;
     this.lastCheckOut = lastCheckOut;
     this.department = department;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getEmail() {

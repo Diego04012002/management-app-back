@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.prueba.demo.dto.departmentDto;
 import com.prueba.demo.models.department;
 import com.prueba.demo.respositories.departmentRepository;
 
@@ -16,8 +17,8 @@ public class departmentService {
   private departmentRepository departmentRepository;
 
   
-  public List<department> getAll() {
-    return departmentRepository.findAll();
+  public List<departmentDto> findDepartmentDto() {
+    return departmentRepository.findDepartmentDto();
   }
 
   public department create(department department) {

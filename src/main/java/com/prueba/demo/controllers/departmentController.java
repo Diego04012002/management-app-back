@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.prueba.demo.dto.departmentDto;
 import com.prueba.demo.models.department;
 import com.prueba.demo.services.departmentService;
 
@@ -20,8 +21,8 @@ public class departmentController {
   private departmentService departmentServices;
 
   @GetMapping("/departments")
-  public List<department> getDepartments() {
-    return departmentServices.getAll();
+  public List<departmentDto> getDepartments() {
+    return departmentServices.findDepartmentDto();
   }
 
   @PostMapping(value = "/departments", consumes = "application/json", produces = "application/json")

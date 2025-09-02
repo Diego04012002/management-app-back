@@ -53,7 +53,7 @@ public class securityConfig {
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/auth/**").permitAll()
-            .anyRequest().hasRole("ADMIN"))
+            .anyRequest().hasAnyRole("ADMIN", "USER"))
         .sessionManagement(session -> session
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -27,19 +27,11 @@ public class checkInController {
 
   @PostMapping("checkInByAdmin/{userId}")
   public ResponseEntity<CheckLog> checkIn(@PathVariable Long userId) {
-    return ResponseEntity.ok(checkInService.createCheckInLog(userId));
+    return ResponseEntity.ok(checkInService.createCheckInLog(userId, true));
   }
 
-
-
-
-  // @GetMapping("/getLatestCheckInList")
-  // public ResponseEntity<List<userLastCheckIn>> getLatestCheckIn() {
-  //   return ResponseEntity.ok(checkInService.getLastCheckInList());
-  // }
-
-  // @GetMapping("/getLatestCheckIn")
-  // public ResponseEntity<lastCheckIn> getLatestCheckIn(@Param("userId") Long userId) {
-  //   return ResponseEntity.ok(checkInService.getLastCheckIn(userId));
-  // }
+  @PostMapping("checkInYourself/{userId}")
+  public ResponseEntity<CheckLog> checkInYourself(@PathVariable Long userId) {
+    return ResponseEntity.ok(checkInService.createCheckInLog(userId, false));
+  }
 }
