@@ -21,6 +21,8 @@ public class checkInService {
   private checkInRepository checkinRepository;
   @Autowired
   private userService userService;
+  @Autowired
+  notificationService notificationService;
 
   public List<CheckLog> findAll() {
     return checkinRepository.findAll();
@@ -34,11 +36,11 @@ public class checkInService {
       newCheckLog.setId(null);
       user user = userService.findById(id);
       newCheckLog.setSubject(user);
-      if(isAdmin){
+      if (isAdmin) {
         user userPerfomed = userService.getByEmail(auth.getName());
         newCheckLog.setPerformedBy(userPerfomed);
         newCheckLog.setSource(checkSource.ADMIN_PANEL);
-      }else if(!isAdmin){
+      } else if (!isAdmin) {
         user userPerfomed = null;
         newCheckLog.setPerformedBy(userPerfomed);
         newCheckLog.setSource(checkSource.SELF_SERVICE);
@@ -49,11 +51,11 @@ public class checkInService {
     } else {
       newCheckLog.setId(null);
       newCheckLog.setSubject(checkLog.getSubject());
-      if(isAdmin){
+      if (isAdmin) {
         user userPerfomed = userService.getByEmail(auth.getName());
         newCheckLog.setPerformedBy(userPerfomed);
         newCheckLog.setSource(checkSource.ADMIN_PANEL);
-      }else if(!isAdmin){
+      } else if (!isAdmin) {
         user userPerfomed = null;
         newCheckLog.setPerformedBy(userPerfomed);
         newCheckLog.setSource(checkSource.SELF_SERVICE);
@@ -63,8 +65,17 @@ public class checkInService {
       newCheckLog
           .setAction(checkLog.getAction() == checkAction.CHECK_IN ? checkAction.CHECK_OUT : checkAction.CHECK_IN);
     }
+    CheckLog savedCheckLog = checkinRepository.save(newCheckLog);
+    notificationService.sendNotification("holaaaaa");
+    return savedCheckLog;
+  }
 
-    return checkinRepository.save(newCheckLog);
+  public int countChecksLogsCurrentDay(){
+    return checkinRepository.countChecksLogsCurrentDay();
+  }
+
+  public int countChecksInCurrentDay(){
+    return checkinRepository.countChecksInsCurrentDay();
   }
 
 }

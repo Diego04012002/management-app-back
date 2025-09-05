@@ -1,6 +1,5 @@
 package com.prueba.demo.respositories;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,6 +17,8 @@ import com.prueba.demo.models.user;
 @Repository
 public interface usersRespository extends JpaRepository<user, Long> {
   Optional<user> findByEmail(String email);
+
+  Optional<user> findByPassword(String password);
 
   @Query("""
                   SELECT new com.prueba.demo.dto.lastCheckForUser(
@@ -114,4 +115,9 @@ public interface usersRespository extends JpaRepository<user, Long> {
       """)
   Optional<userInformationDto> findLastCheckInOutByEmail(@Param("email") String email);
 
+  @Query("""
+          SELECT COUNT(u)
+          FROM user u
+      """)
+  int countUser();
 }

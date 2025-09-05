@@ -34,4 +34,14 @@ public class checkInController {
   public ResponseEntity<CheckLog> checkInYourself(@PathVariable Long userId) {
     return ResponseEntity.ok(checkInService.createCheckInLog(userId, false));
   }
+
+  @GetMapping("countCheckLogsCurrent")
+  public ResponseEntity<Integer> countCheckLogs(){
+    return ResponseEntity.ok(checkInService.countChecksLogsCurrentDay());
+  }
+
+  @GetMapping("countCheckInsCurrent")
+  public ResponseEntity<Integer> countCheckIns(){
+    return ResponseEntity.ok(checkInService.countChecksInCurrentDay());
+  }
 }

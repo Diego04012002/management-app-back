@@ -52,8 +52,18 @@ public class userController {
     return ResponseEntity.ok(userService.getCountUserWithCheckInAndCheckOut());
   }
 
+  @GetMapping("getCountUserWithCheckIn")
+  public ResponseEntity<Long> getCountUserWithCheckIn(){
+    return ResponseEntity.ok(userService.getCountCurrentCheckIn());
+  }
+
   @GetMapping("/userInformation")
   public ResponseEntity<userInformationDto> getUserInformation(){
     return ResponseEntity.ok(userService.getUserInformation());
+  }
+
+  @GetMapping("countUser")
+  public ResponseEntity<Integer> countUser(){
+    return ResponseEntity.ok(userService.countUsers());
   }
 }

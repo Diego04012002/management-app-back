@@ -57,11 +57,19 @@ public class userService implements UserDetailsService {
     return numberChecksLogs;
   }
 
+  public long getCountCurrentCheckIn(){
+    return userRepository.countUsersWithLastCheckIn();
+  }
+
   public userInformationDto getUserInformation(){
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     String email = auth.getName();
     userInformationDto user = userRepository.findLastCheckInOutByEmail(email).orElse(null);
     return user;
+  }
+
+  public int countUsers(){
+    return userRepository.countUser();
   }
 
   @Override
