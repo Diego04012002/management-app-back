@@ -21,8 +21,6 @@ public class checkInService {
   private checkInRepository checkinRepository;
   @Autowired
   private userService userService;
-  @Autowired
-  notificationService notificationService;
 
   public List<CheckLog> findAll() {
     return checkinRepository.findAll();
@@ -66,7 +64,6 @@ public class checkInService {
           .setAction(checkLog.getAction() == checkAction.CHECK_IN ? checkAction.CHECK_OUT : checkAction.CHECK_IN);
     }
     CheckLog savedCheckLog = checkinRepository.save(newCheckLog);
-    notificationService.sendNotification("holaaaaa");
     return savedCheckLog;
   }
 
